@@ -73,7 +73,7 @@ local currentlySurrendering = {}
 hook.Add("Think", "tbfy_surrender_think", function()
 	for k,v in pairs(currentlySurrendering) do
 		local ply, time = v.ply, v.surrenderTime
-		if time < CurTime() then
+		if time <= CurTime() then
 			currentlySurrendering[ply:SteamID()] = nil
 			net.Start("tbfy_surrender")
 				net.WriteUInt(0, 26)
@@ -92,11 +92,11 @@ end)
 
 hook.Add("PlayerButtonDown","tbfy_surrender_playerbuttondown",function(ply, key)
 	if TBFYSurrenderConfig.SurrenderEnabled and key == TBFYSurrenderConfig.SurrenderKey and ply:TBFY_CanSurrender() then
-		local surrenderTime = CurTime() + 2.5
+		local surrenderTime = CurTime() + 2
 		currentlySurrendering[ply:SteamID()] = {ply = ply, surrenderTime = surrenderTime}
 		net.Start("tbfy_surrender")
 			net.WriteUInt(surrenderTime, 26)
-		net.Send(Player)
+		net.Send(ply)
 	end
 end)
 

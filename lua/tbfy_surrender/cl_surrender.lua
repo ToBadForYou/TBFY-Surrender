@@ -64,6 +64,8 @@ hook.Add("HUDPaint", "tbfy_surrender_hudpaint", function()
 	local surrenderTime = LocalPlayer().Surrendering
 	if surrenderTime then
 		local TimeLeft = math.Round(surrenderTime - CurTime(), 1)
-		draw.SimpleTextOutlined("Surrendering - " .. TimeLeft,"tbfy_surrender", ScrW()/2, ScrH()/2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, color_black)
+		if TimeLeft > 0 then
+			draw.SimpleTextOutlined("Surrendering - " .. TimeLeft,"tbfy_surrender", ScrW()/2, ScrH()/2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 2, color_black)
+		end
 	end
 end)
